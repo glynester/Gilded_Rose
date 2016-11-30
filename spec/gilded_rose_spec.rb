@@ -45,7 +45,7 @@ describe GildedRose do
     end
   end
 
-  context 'Add "Sulfuras"' do
+  context 'Add "Backstage passes"' do
     it 'shows correct balance on the following day  (days down by 1, quality up by 1)' do
       b_stage_passes = Item.new("Backstage passes to a TAFKAL80ETC concert", 20, 40)
       guilded_rose = GildedRose.new(b_stage_passes)
@@ -66,7 +66,7 @@ describe GildedRose do
     end
   end
 
-  context 'Addin other types of non-special items' do
+  context 'Adding other types of non-special items' do
     it 'shows correct balance on the following day  (days down by 1, quality down by 1)' do
       normal_item = Item.new("Normal Item", 20, 40)
       guilded_rose = GildedRose.new(normal_item)
@@ -81,6 +81,14 @@ describe GildedRose do
       expect(normal_item.to_s).to eq "Normal Item, -14, 11"
     end
 
+    it 'quality does not become less than 0' do
+      normal_item = Item.new("Normal Item", 1, 40)
+      guilded_rose = GildedRose.new(normal_item)
+      41.times { guilded_rose.update_quality }
+      expect(normal_item.to_s).to eq "Normal Item, -40, 0"
+    end
+
+
   end
 
   # context 'Add "Conjured"' do
@@ -89,6 +97,13 @@ describe GildedRose do
   #     guilded_rose = GildedRose.new(conjured)
   #     guilded_rose.update_quality
   #     expect(conjured.to_s).to eq "Conjured, 19, 38"
+  #   end
+  #
+  #   it 'quality reduces 4 times faster once "sell by" is passed (days down by 1, quality down by 4)' do
+  #     normal_item = Item.new("Normal Item", 1, 40)
+  #     guilded_rose = GildedRose.new(normal_item)
+  #     6.times { guilded_rose.update_quality }
+  #     expect(normal_item.to_s).to eq "Normal Item, -5, 18"
   #   end
   # end
 end
