@@ -1,9 +1,6 @@
 require 'rspec'
-# require 'test/unit/assertions'
 require './lib/gilded_rose'
 require './lib/item'
-
-
 
 describe GildedRose do
 
@@ -15,7 +12,7 @@ describe GildedRose do
     end
   end
 
-  context 'Add "Aged Brie"' do
+  context 'Adding "Aged Brie"' do
     it 'shows correct balance on the following day (days down by 1, quality up by 1)' do
       brie = Item.new("Aged Brie", 20, 30)
       guilded_rose = GildedRose.new(brie)
@@ -30,7 +27,7 @@ describe GildedRose do
     end
   end
 
-  context 'Add "Sulfuras"' do
+  context 'Adding "Sulfuras"' do
     it 'shows correct balance on the following day (days + quality the same)' do
       sulfuras = Item.new("Sulfuras, Hand of Ragnaros", 20, 30)
       guilded_rose = GildedRose.new(sulfuras)
@@ -45,13 +42,28 @@ describe GildedRose do
     end
   end
 
-  context 'Add "Backstage passes"' do
+  context 'Adding "Backstage passes"' do
     it 'shows correct balance on the following day  (days down by 1, quality up by 1)' do
       b_stage_passes = Item.new("Backstage passes to a TAFKAL80ETC concert", 20, 40)
       guilded_rose = GildedRose.new(b_stage_passes)
       guilded_rose.update_quality
       expect(b_stage_passes.to_s).to eq "Backstage passes to a TAFKAL80ETC concert, 19, 41"
     end
+
+    it 'increases in value by 2 when days remaining < 10 and > 5' do
+      b_stage_passes = Item.new("Backstage passes to a TAFKAL80ETC concert", 11, 40)
+      guilded_rose = GildedRose.new(b_stage_passes)
+      5.times { guilded_rose.update_quality }
+      expect(b_stage_passes.to_s).to eq "Backstage passes to a TAFKAL80ETC concert, 6, 49"
+    end
+
+    it 'increases in value by 3 when days remaining < 5' do
+      b_stage_passes = Item.new("Backstage passes to a TAFKAL80ETC concert", 6, 30)
+      guilded_rose = GildedRose.new(b_stage_passes)
+      5.times { guilded_rose.update_quality }
+      expect(b_stage_passes.to_s).to eq "Backstage passes to a TAFKAL80ETC concert, 1, 44"
+    end
+
     it 'does not exceed 50' do
       b_stage_passes = Item.new("Backstage passes to a TAFKAL80ETC concert", 20, 40)
       guilded_rose = GildedRose.new(b_stage_passes)
@@ -87,8 +99,6 @@ describe GildedRose do
       41.times { guilded_rose.update_quality }
       expect(normal_item.to_s).to eq "Normal Item, -40, 0"
     end
-
-
   end
 
   # context 'Add "Conjured"' do
