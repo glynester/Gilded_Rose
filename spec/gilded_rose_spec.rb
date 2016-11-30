@@ -103,17 +103,17 @@ describe GildedRose do
 
   # context 'Add "Conjured"' do
   #   it 'shows correct balance on the following day  (days down by 1, quality down by 2)' do
-  #     conjured = Item.new("Conjured", 20, 40)
+  #     conjured = Item.new("Conjured Mana Cake", 20, 40)
   #     guilded_rose = GildedRose.new(conjured)
   #     guilded_rose.update_quality
   #     expect(conjured.to_s).to eq "Conjured, 19, 38"
   #   end
   #
   #   it 'quality reduces 4 times faster once "sell by" is passed (days down by 1, quality down by 4)' do
-  #     normal_item = Item.new("Normal Item", 1, 40)
-  #     guilded_rose = GildedRose.new(normal_item)
+  #     conjured = Item.new("Conjured Mana Cake Item", 1, 40)
+  #     guilded_rose = GildedRose.new(conjured)
   #     6.times { guilded_rose.update_quality }
-  #     expect(normal_item.to_s).to eq "Normal Item, -5, 18"
+  #     expect(conjured.to_s).to eq "Conjured, -5, 18"
   #   end
   # end
 end
